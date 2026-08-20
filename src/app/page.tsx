@@ -1,69 +1,69 @@
-import Image from "next/image";
+
+"use client";
+
+import { useRef, useState, useEffect } from "react";
+import { useScroll, useTransform, useSpring } from "framer-motion";
+import { projectsData, Project } from "@/data/projects";
+
+// 📦 引入我們剛剛建立的所有「樂高積木」組件
+import NoiseOverlay from "@/components/Shared/NoiseOverlay";
+import BackToTop from "@/components/Shared/BackToTop";
+import BinaryBackground from "@/components/Home/BinaryBackground";
+import ScrollIndicator from "@/components/Home/ScrollIndicator";
+import TopHeader from "@/components/Home/TopHeader";
+import Sidebar from "@/components/Home/Sidebar";
+import HeroProfile from "@/components/Home/HeroProfile";
+import ProjectCarousel from "@/components/Home/ProjectCarousel";
+import ProjectModal from "@/components/Home/ProjectModal";
 
 export default function Home() {
+  // 1. 取得 DOM 節點參考，用來計算滾動深度
+  const targetRef = useRef<HTMLDivElement>(null);
+  
+  // 2. 核心狀態：滾動進度與目前選中的專案
+  const { scrollYProgress } = useScroll({ target: targetRef });
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // 3. 處理底層摩天輪的旋轉數學邏輯
+  const anglePerCard = 15;
+  const totalAngle = (projectsData.length - 1) * anglePerCard;
+  const rawRotate = useTransform(scrollYProgress, [0, 1], [0, -totalAngle]);
+  const rotate = useSpring(rawRotate, { stiffness: 60, damping: 20 });
+
+  // 4. 鎖定背景滾動：當開啟毛玻璃彈窗時，禁止背景滑動
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    // Cleanup 函數：離開組件時解鎖
+    return () => { document.body.style.overflow = "auto"; };
+  }, [selectedProject]);
+
+  // 5. 極致乾淨的 UI 渲染區塊
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main ref={targetRef} className="h-[400vh] bg-[#050505] text-white overflow-clip font-sans relative">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        
+        {/* --- Layer 1: 底層背景與特效 --- */}
+        <NoiseOverlay />
+        <BinaryBackground />
+        
+        {/* --- Layer 2: 滾動提示與進度條 --- */}
+        <TopHeader />
+        <BackToTop />
+        <ScrollIndicator />
+
+        {/* --- Layer 3: 靜態資訊區塊 --- */}
+        <Sidebar />
+        <HeroProfile />
+
+        {/* --- Layer 4: 動態互動區塊 --- */}
+        <ProjectCarousel rotate={rotate} setSelectedProject={setSelectedProject} />
+        <ProjectModal selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+
+      </div>
+    </main>
   );
 }

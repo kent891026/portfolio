@@ -1,7 +1,7 @@
 import { projectsData } from "@/data/projects";
 // 引入我們做好的所有模組積木
 import NoiseOverlay from "@/components/Shared/NoiseOverlay";
-import BackNav from "@/components/shared/BackNav";
+import BackNav from "@/components/Shared/BackNav";
 import DetailHero from "@/components/ProjectDetail/DetailHero";
 import TechSidebar from "@/components/ProjectDetail/TechSidebar";
 import ImageGallery from "@/components/ProjectDetail/ImageGallery";

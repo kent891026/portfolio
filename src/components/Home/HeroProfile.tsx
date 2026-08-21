@@ -56,22 +56,22 @@ const GlitchText = ({ text, className }: { text: string; className?: string }) =
 
 export default function HeroProfile() {
   return (
-    // 在 HeroProfile 的最外層 div
-    <div className="absolute top-[15vh] left-[8vw] md:left-[12vw] z-10 pointer-events-auto max-w-3xl">      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}>
-        
-        {/* ⭐ 標題升級：套用思源宋體 (明朝體質感)，並拉開字距 */}
+    // ✨ 將手機版改為 relative 並加上內距 (pt, px, pb)，電腦版保持 absolute
+    <div className="relative md:absolute pt-[15vh] md:pt-0 md:top-[15vh] px-8 md:px-0 md:left-[12vw] z-10 pointer-events-auto max-w-3xl pb-12 md:pb-0">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }}>
+        {/* ⭐ 標題升級：手機縮小為 text-2xl，並稍微縮小字距防止爆框 */}
         <h1 
-          className="text-5xl md:text-7xl mb-4 tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 drop-shadow-sm pb-1 whitespace-nowrap"
+          className="text-2xl md:text-7xl mb-4 tracking-wider md:tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 drop-shadow-sm pb-1 whitespace-nowrap"
           style={{ fontFamily: 'var(--font-noto-serif-tc), serif', fontWeight: 500 }}
         >
           陳致穎 Kent Chen.
         </h1>
         
-        {/* ⭐ 副標題升級：套用剛寫好的 GlitchText 組件 */}
+        {/* ⭐ 副標題升級：手機縮小為 text-[9px] */}
         <div className="mb-8">
           <GlitchText 
             text={siteConfig.profile.tagline} 
-            className="text-gray-400 font-mono text-sm tracking-[0.2em] uppercase"
+            className="text-gray-400 font-mono text-[9px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase"
           />
         </div>
         
@@ -90,7 +90,9 @@ export default function HeroProfile() {
           {/* 左側：Capabilities */}
           <div>
             <h3 className="text-gray-500 font-mono text-[10px] tracking-widest mb-4 uppercase">Capabilities</h3>
-            <div className="flex flex-col gap-2 font-mono text-[10px] tracking-wider">
+            {/* ✨ 把 text-[10px] 改成 text-[9px] md:text-[10px] */}
+            <div className="flex flex-col gap-2 font-mono text-[9px] md:text-[10px] tracking-wide md:tracking-wider">
+              {/* ... 中間的 Software, Hardware 等維持不變 ... */}
               <div className="flex gap-2">
                 <span className="text-[#0B346E] whitespace-nowrap">[ Software ]</span>
                 <span className="text-gray-400">Python, C, C++, C#, Adobe, Rhino GH</span>
@@ -109,7 +111,9 @@ export default function HeroProfile() {
           {/* 右側：Journey */}
           <div>
             <h3 className="text-gray-500 font-mono text-[10px] tracking-widest mb-4 uppercase">Journey</h3>
-            <div className="flex flex-col gap-2 font-mono text-[10px] tracking-wider relative border-l border-white/10 pl-3">
+            {/* ✨ 同樣把 text-[10px] 改成 text-[9px] md:text-[10px] */}
+            <div className="flex flex-col gap-2 font-mono text-[9px] md:text-[10px] tracking-wide md:tracking-wider relative border-l border-white/10 pl-3">
+              {/* ... 中間的 2026, 2025 年份內容維持不變 ... */}
               <div className="relative">
                 <span className="absolute -left-[15px] top-1.5 w-1.5 h-1.5 rounded-full bg-[#0B346E] shadow-[0_0_8px_rgba(75,136,223,0.8)]"></span>
                 <span className="text-[#0B346E] mr-2">2026</span>

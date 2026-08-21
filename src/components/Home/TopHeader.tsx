@@ -25,7 +25,8 @@ export default function TopHeader() {
       initial={{ opacity: 0, y: -20 }} 
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 1, delay: 0.5 }}
-      className="absolute top-8 left-8 md:left-12 z-50 flex flex-wrap items-center gap-4 md:gap-6 font-mono text-[10px] tracking-widest text-gray-500 uppercase"
+      // 手機版 flex-col (垂直)，電腦版 md:flex-row (水平)
+      className="absolute top-6 left-[5vw] md:left-12 z-50 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6 font-mono text-[10px] tracking-widest text-gray-500 uppercase"
     >
       <a href="mailto:kent891026@gmail.com" className="hover:text-[#4B88DF] transition-colors border-b border-transparent hover:border-[#4B88DF] pb-1">
         kent891026@gmail.com

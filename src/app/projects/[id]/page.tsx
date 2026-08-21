@@ -4,7 +4,7 @@ import NoiseOverlay from "@/components/Shared/NoiseOverlay";
 import BackNav from "@/components/Shared/BackNav";
 import DetailHero from "@/components/ProjectDetail/DetailHero";
 import TechSidebar from "@/components/ProjectDetail/TechSidebar";
-import ImageGallery from "@/components/ProjectDetail/ImageGallery";
+import ImageSlider from "@/components/ProjectDetail/ImageSlider";
 import ProjectModel from "@/components/ProjectModel";
 
 interface ProjectPageProps {
@@ -44,7 +44,9 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
           <h3 className="text-gray-500 font-mono text-sm tracking-widest mb-8 uppercase border-b border-white/10 pb-4">
             System Overview
           </h3>
-          <p className="text-gray-300 text-lg leading-relaxed mb-16 tracking-wide text-justify">
+
+          {/* ✨ 修改 text-lg 為 text-xs md:text-lg，並調整手機版行距 */}
+          <p className="whitespace-pre-wrap text-gray-300 text-xs md:text-lg leading-loose md:leading-relaxed mb-16 tracking-wide text-justify">
             {project.description}
           </p>
           
@@ -53,8 +55,24 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
             <ProjectModel modelPath={project.modelUrl} projectTitle={project.title} />
           )}
 
-          {/* 靜態多圖相簿塊 */}
-          <ImageGallery images={project.galleryImages} />
+          {/* ✨ 動態渲染：根據資料庫的 galleries 自動長出畫廊區塊 */}
+          {project.galleries && project.galleries.length > 0 && (
+            <div className="mt-12 flex flex-col gap-16">
+              
+              {project.galleries.map((gallery, index) => (
+                <div key={index} className="w-full">
+                  <h3 className="text-gray-500 font-mono text-sm tracking-widest mb-6 uppercase border-b border-white/10 pb-4">
+                    {/* 印出每個區塊的自訂標題，例如 Architecture Drawings 或 Model */}
+                    {gallery.sectionTitle}
+                  </h3>
+                  
+                  {/* 將這一個區塊專屬的 slides 傳給幻燈片 */}
+                  <ImageSlider slides={gallery.slides} />
+                </div>
+              ))}
+
+            </div>
+          )}
         </div>
 
         {/* 右側邊欄區 (連結與技術棧) */}

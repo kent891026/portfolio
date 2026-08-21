@@ -39,12 +39,41 @@ function BinaryParticles() {
 
   // 使用 useEffect 來監聽滑鼠移動事件，並更新 mousePosition
   useEffect(() => {
+    // 1. 電腦版滑鼠移動
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mousePosition.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
+
+    // 2. ✨ 手機版手指觸控滑動
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        // 捕捉第一根手指的位置
+        mousePosition.current.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+        mousePosition.current.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+      }
+    };
+
+    // 3. ✨ 網頁滾動聯動 (當手指放開但網頁還在滑時，也能跟著轉)
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (maxScroll > 0) {
+        // 將滾動進度 (0 到 1) 轉換為背景的上下旋轉角度 (-1 到 1)
+        mousePosition.current.y = -((scrollY / maxScroll) * 2 - 1);
+      }
+    };
+
+    // 綁定所有事件 (加上 passive: true 提升手機版滑動效能)
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // 使用 useFrame 來在每一幀更新粒子的旋轉，並根據滑鼠位置調整旋轉角度
@@ -83,7 +112,8 @@ function BinaryParticles() {
 // 這個組件負責渲染整個二進位數字的背景，並使用 Canvas 來渲染 Three.js 的場景
 export default function BinaryBackground() {
   return (
-    <div className="absolute inset-0 z-0">
+    // ✨ 將 absolute 改為 fixed，並加上 pointer-events-none 確保不會阻礙觸控
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <BinaryParticles />
       </Canvas>

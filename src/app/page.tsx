@@ -43,8 +43,9 @@ export default function Home() {
 
   // 5. 極致乾淨的 UI 渲染區塊
   return (
-    <main ref={targetRef} className="h-[400vh] bg-[#050505] text-white overflow-clip font-sans relative">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+    <main ref={targetRef} className="h-auto md:h-[400vh] bg-[#050505] text-white overflow-x-hidden md:overflow-clip font-sans relative">
+      {/* ✨ 將 h-screen 改為 min-h-screen md:h-screen，並解開手機版的 overflow-hidden */}
+      <div className="relative md:sticky top-0 min-h-screen md:h-screen w-full overflow-x-hidden md:overflow-hidden">
         
         {/* --- Layer 1: 底層背景與特效 --- */}
         <NoiseOverlay />

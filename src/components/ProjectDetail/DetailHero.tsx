@@ -27,6 +27,37 @@ export default function DetailHero({ project }: { project: Project }) {
         <p className="text-xl md:text-2xl text-[#4B88DF] font-mono opacity-80">
           {project.subtitle}
         </p>
+
+        {/* ✨ 移至標題區的正式 Credits 卡片 */}
+        {(project.collaborator || project.advisor) && (
+          <div className="mt-8 flex flex-col gap-3 text-sm font-mono border-l-2 border-white/20 pl-6 py-1">
+            
+            {/* 共同創作者 */}
+            {project.collaborator && (
+              <div className="flex items-center gap-4">
+                <span className="uppercase tracking-widest text-white/50 text-xs w-32 shrink-0">
+                  Collaboration
+                </span>
+                <span className="text-white/90 tracking-widest font-light">
+                  {project.collaborator}
+                </span>
+              </div>
+            )}
+
+            {/* 指導老師 */}
+            {project.advisor && (
+              <div className="flex items-center gap-4">
+                <span className="uppercase tracking-widest text-white/50 text-xs w-32 shrink-0">
+                  Advisor
+                </span>
+                <span className="text-white/90 tracking-widest font-light">
+                  {project.advisor}
+                </span>
+              </div>
+            )}
+            
+          </div>
+        )}
       </div>
     </header>
   );

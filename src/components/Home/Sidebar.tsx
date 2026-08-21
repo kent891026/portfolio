@@ -15,7 +15,7 @@ export default function Sidebar() {
   };
 
   return (
-    <nav className="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-10 font-mono text-[10px] tracking-[0.2em] text-gray-500">
+    <nav className="hidden md:block absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-10 font-mono text-[10px] tracking-[0.2em] text-gray-500">
       <div className="flex flex-col gap-5 relative">
         <div className="absolute right-[-12px] top-0 bottom-0 w-[1px] bg-white/10"></div>
         {siteConfig.sidebarCategories.map((category) => (

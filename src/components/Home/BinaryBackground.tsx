@@ -3,12 +3,12 @@ import { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
+import * as random from "maath/random";
 
 // 這個組件負責生成二進位數字的粒子背景
 function BinaryParticles() {
-  const ref0 = useRef<any>();
-  const ref1 = useRef<any>();
+  const ref0 = useRef<THREE.Points>(null);
+  const ref1 = useRef<THREE.Points>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
 
   // 使用 useMemo 來創建二進位數字的紋理，避免每次渲染都重新生成

@@ -20,7 +20,7 @@ export default function ProjectModel({ modelPath, projectTitle }: ProjectModelPr
   const [isExpanded, setIsExpanded] = useState(false);
 
   // 封裝一個包含 Scene 與噪點的 UI 視窗區塊
-  const ModelWindow = () => (
+  const renderModelWindow = () => (
     <div className="w-full h-full relative group bg-[#030712]">
       {/* 噪點層 */}
       <div className="absolute inset-0 z-10 opacity-[0.1] mix-blend-overlay pointer-events-none" style={{ backgroundImage: noiseSvg }} />
@@ -48,7 +48,7 @@ export default function ProjectModel({ modelPath, projectTitle }: ProjectModelPr
       
       {/* 小尺寸的展示框 */}
       <div className="w-full aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
-        <ModelWindow />
+        {renderModelWindow()}
       </div>
 
       {/* 🚀 全螢幕 3D 模型 Lightbox */}
@@ -80,7 +80,7 @@ export default function ProjectModel({ modelPath, projectTitle }: ProjectModelPr
               className="flex-grow w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/80"
               onClick={(e) => e.stopPropagation()} // 避免點到模型視窗就關閉
             >
-              <ModelWindow />
+              {renderModelWindow()}
             </motion.div>
 
             {/* 底部操作說明 */}

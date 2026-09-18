@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="機械手臂專案圖片待補">
+  <rect width="1200" height="800" fill="#030712"/>
+  <path d="M120 600h960M600 100v600M120 200h960" stroke="#4B88DF" stroke-opacity=".16" stroke-width="2"/>
+  <circle cx="600" cy="400" r="180" fill="none" stroke="#4B88DF" stroke-opacity=".35" stroke-width="2"/>
+  <text x="600" y="390" text-anchor="middle" fill="#9ca3af" font-family="monospace" font-size="28" letter-spacing="5">ROBOTIC ARM</text>
+  <text x="600" y="430" text-anchor="middle" fill="#4B88DF" font-family="monospace" font-size="18" letter-spacing="3">WORK IN PROGRESS</text>
+</svg>

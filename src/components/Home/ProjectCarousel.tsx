@@ -4,7 +4,7 @@ import { projectsData, Project } from "@/data/projects";
 import { noiseSvg } from "@/components/Shared/NoiseOverlay";
 
 interface CarouselProps {
-  rotate: MotionValue<string>;
+  rotate: MotionValue<number>;
   setSelectedProject: (project: Project) => void;
 }
 

@@ -1,4 +1,10 @@
-@import "tailwindcss";
+/*
+ * Tailwind v4 normally scans the entire repository as plain text. Keep the
+ * scan inside src/ so large public SVG drawings and GLB assets are never fed
+ * into the class detector during production builds.
+ */
+@import "tailwindcss" source(none);
+@source "../";
 
 :root {
   --background: #ffffff;
